@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML-quiz for 1IMA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ground:#eef3f7; --flate:#ffffff; --flate2:#e4ebf1; --strek:#cfdae3;
+  --tekst:#0f2233; --svak:#55697a;
+  --merke:#10314f; --merke-tekst:#ffffff; --aksent:#10314f;
+  --rett:#0b6e4f; --rett-flate:#e4f1ea; --rett-strek:#a9d4c1;
+  --galt:#b3261e; --galt-flate:#fbeceb; --galt-strek:#e6b8b4;
+  --kode:#e9eff5;
+  --c-tagg:#0b4f6c; --c-attr:#7a4a00; --c-str:#0b6e4f; --c-kom:#7d8d9b; --c-punkt:#93a6b5;
+  --skygge:0 1px 2px rgba(15,34,51,.06), 0 8px 24px rgba(15,34,51,.07);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0b151d; --flate:#12212c; --flate2:#1a2c3a; --strek:#294150;
+    --tekst:#e7eff5; --svak:#94a9b9;
+    --merke:#6cb6de; --merke-tekst:#07141d; --aksent:#8ecdf0;
+    --rett:#5ccb95; --rett-flate:#0f2a20; --rett-strek:#245c44;
+    --galt:#ff9086; --galt-flate:#2b1614; --galt-strek:#6b302b;
+    --kode:#0d1a24;
+    --c-tagg:#7fd1e8; --c-attr:#e8c07d; --c-str:#9ede9e; --c-kom:#6d8497; --c-punkt:#6d8497;
+    --skygge:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0b151d; --flate:#12212c; --flate2:#1a2c3a; --strek:#294150;
+  --tekst:#e7eff5; --svak:#94a9b9;
+  --merke:#6cb6de; --merke-tekst:#07141d; --aksent:#8ecdf0;
+  --rett:#5ccb95; --rett-flate:#0f2a20; --rett-strek:#245c44;
+  --galt:#ff9086; --galt-flate:#2b1614; --galt-strek:#6b302b;
+  --kode:#0d1a24;
+  --c-tagg:#7fd1e8; --c-attr:#e8c07d; --c-str:#9ede9e; --c-kom:#6d8497; --c-punkt:#6d8497;
+  --skygge:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+html{overflow-x:hidden}
+body{
+  margin:0; background:var(--ground); color:var(--tekst);
+  font-family:"Familjen Grotesk","Segoe UI",system-ui,sans-serif;
+  font-size:17px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:"JetBrains Mono",ui-monospace,Consolas,monospace}
+.eyebrow{
+  font-family:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--svak);
+}
+
+/* ---------- ramme ---------- */
+.skall{max-width:800px; margin:0 auto; padding:0 20px 72px; display:flex; flex-direction:column; gap:24px}
+
+.topp{
+  position:sticky; top:0; z-index:5; background:var(--ground);
+  border-bottom:1px solid var(--strek); padding:14px 20px 0;
+}
+.topp-rad{max-width:800px; margin:0 auto; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap}
+.merkenavn{font-weight:700; letter-spacing:-.01em}
+.topp-hoyre{margin-left:auto; display:flex; align-items:center; gap:14px}
+.teller{font-variant-numeric:tabular-nums}
+.stolpe{height:3px; background:var(--flate2); border-radius:2px; overflow:hidden; margin-top:12px}
+.stolpe span{display:block; height:100%; width:0; background:var(--aksent); transition:width .35s ease}
+
+/* ---------- kort ---------- */
+.fane{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--flate); border:1px solid var(--strek); border-bottom:none;
+  border-radius:8px 8px 0 0; padding:7px 14px 8px; margin-bottom:-1px;
+  font-family:"JetBrains Mono",ui-monospace,Consolas,monospace; font-size:.78rem; color:var(--svak);
+}
+.fane::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--aksent); opacity:.55}
+.kort{
+  background:var(--flate); border:1px solid var(--strek); border-radius:0 12px 12px 12px;
+  padding:26px 26px 24px; box-shadow:var(--skygge);
+}
+.kort.rund{border-radius:12px}
+
+h1{font-size:2.1rem; line-height:1.12; margin:0 0 10px; letter-spacing:-.025em; text-wrap:balance}
+h2{font-size:1.25rem; margin:0 0 10px; letter-spacing:-.015em}
+.sporsmal{font-size:1.28rem; line-height:1.35; font-weight:600; margin:10px 0 18px; text-wrap:balance; letter-spacing:-.01em}
+.lead{color:var(--svak); margin:0 0 20px; max-width:60ch}
+
+/* ---------- kode ---------- */
+pre.kode{
+  background:var(--kode); border:1px solid var(--strek); border-radius:8px;
+  padding:14px 16px; margin:0 0 20px; overflow-x:auto;
+  font-family:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  font-size:.86rem; line-height:1.6; tab-size:2;
+}
+.c-tagg{color:var(--c-tagg); font-weight:500}
+.c-attr{color:var(--c-attr)}
+.c-str{color:var(--c-str)}
+.c-kom{color:var(--c-kom); font-style:italic}
+.c-punkt{color:var(--c-punkt)}
+
+/* ---------- svaralternativ ---------- */
+.valg{display:flex; flex-direction:column; gap:9px}
+.alt{
+  display:flex; align-items:flex-start; gap:13px; width:100%; text-align:left;
+  background:var(--flate); color:var(--tekst);
+  border:1.5px solid var(--strek); border-radius:9px; padding:13px 15px;
+  font:inherit; cursor:pointer; transition:border-color .12s, background .12s, transform .08s;
+}
+.alt:hover:not(:disabled){border-color:var(--aksent); background:var(--flate2)}
+.alt:active:not(:disabled){transform:translateY(1px)}
+.alt:focus-visible{outline:3px solid var(--aksent); outline-offset:2px}
+.alt .tast{
+  flex:none; width:24px; height:24px; border-radius:6px; background:var(--flate2);
+  border:1px solid var(--strek); display:grid; place-items:center;
+  font-family:"JetBrains Mono",ui-monospace,Consolas,monospace; font-size:.75rem; color:var(--svak);
+  margin-top:1px;
+}
+.alt .tekst{overflow-wrap:anywhere}
+.alt .tekst code{
+  font-family:"JetBrains Mono",ui-monospace,Consolas,monospace; font-size:.85em;
+  background:var(--kode); padding:1px 5px; border-radius:4px;
+}
+.alt.valgt{border-color:var(--aksent); background:var(--flate2)}
+.alt.riktig{border-color:var(--rett-strek); background:var(--rett-flate)}
+.alt.riktig .tast{background:var(--rett); border-color:var(--rett); color:var(--flate)}
+.alt.feil{border-color:var(--galt-strek); background:var(--galt-flate)}
+.alt.feil .tast{background:var(--galt); border-color:var(--galt); color:var(--flate)}
+.alt:disabled{cursor:default}
+.alt.dempet{opacity:.55}
+
+/* ---------- tilbakemelding ---------- */
+.tilbake{
+  margin-top:18px; border-left:3px solid var(--strek); padding:2px 0 2px 15px;
+}
+.tilbake[data-svar="rett"]{border-left-color:var(--rett)}
+.tilbake[data-svar="galt"]{border-left-color:var(--galt)}
+.tilbake .dom{font-weight:700; margin:0 0 4px}
+.tilbake[data-svar="rett"] .dom{color:var(--rett)}
+.tilbake[data-svar="galt"] .dom{color:var(--galt)}
+.tilbake p{margin:0; color:var(--svak); max-width:62ch}
+.tilbake code{
+  font-family:"JetBrains Mono",ui-monospace,Consolas,monospace; font-size:.85em;
+  background:var(--kode); padding:1px 5px; border-radius:4px; color:var(--tekst);
+}
+
+/* ---------- knapper ---------- */
+.knapp{
+  display:inline-flex; align-items:center; gap:9px; font:inherit; font-weight:600;
+  background:var(--merke); color:var(--merke-tekst); border:1.5px solid var(--merke);
+  border-radius:9px; padding:11px 20px; cursor:pointer; transition:opacity .12s, transform .08s;
+}
+.knapp:hover{opacity:.88}
+.knapp:active{transform:translateY(1px)}
+.knapp:focus-visible{outline:3px solid var(--aksent); outline-offset:2px}
+.knapp.stille{background:transparent; color:var(--tekst); border-color:var(--strek)}
+.knapp.stille:hover{border-color:var(--aksent); background:var(--flate2); opacity:1}
+.knapp[hidden]{display:none}
+.knapp .pil{font-family:"JetBrains Mono",monospace; opacity:.7}
+
+.fot{display:flex; align-items:center; gap:12px; margin-top:22px; flex-wrap:wrap}
+.fot .hint{margin-left:auto; color:var(--svak); font-size:.82rem}
+
+/* ---------- startskjerm ---------- */
+.temaliste{display:flex; flex-wrap:wrap; gap:7px; margin:0 0 24px; padding:0; list-style:none}
+.temaliste li{
+  font-family:"JetBrains Mono",ui-monospace,Consolas,monospace; font-size:.76rem;
+  background:var(--flate2); border:1px solid var(--strek); border-radius:6px; padding:4px 9px; color:var(--svak);
+}
+.moduser{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:6px}
+.modus{
+  text-align:left; background:var(--flate); border:1.5px solid var(--strek); border-radius:11px;
+  padding:18px; font:inherit; color:var(--tekst); cursor:pointer; transition:border-color .12s, background .12s;
+  display:flex; flex-direction:column; gap:6px;
+}
+.modus:hover{border-color:var(--aksent); background:var(--flate2)}
+.modus:focus-visible{outline:3px solid var(--aksent); outline-offset:2px}
+.modus b{font-size:1.05rem}
+.modus span{color:var(--svak); font-size:.88rem; line-height:1.4}
+@media (max-width:620px){ .moduser{grid-template-columns:1fr} }
+
+/* ---------- sluttskjerm ---------- */
+.score{display:flex; align-items:baseline; gap:12px; margin:4px 0 6px}
+.score b{font-size:3.4rem; line-height:1; letter-spacing:-.03em; font-variant-numeric:tabular-nums}
+.score span{color:var(--svak)}
+.temascore{width:100%; border-collapse:collapse; margin:18px 0 4px; font-size:.92rem}
+.temascore th,.temascore td{text-align:left; padding:7px 10px; border-bottom:1px solid var(--strek)}
+.temascore th{font-family:"JetBrains Mono",monospace; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--svak); font-weight:400}
+.temascore td:last-child{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+.meter{display:inline-block; width:74px; height:6px; border-radius:3px; background:var(--flate2); overflow:hidden; vertical-align:middle; margin-right:9px}
+.meter i{display:block; height:100%; background:var(--rett)}
+.fasit{margin-top:26px; display:flex; flex-direction:column; gap:14px}
+.fasit-post{border-left:3px solid var(--galt); padding-left:15px}
+.fasit-post .eyebrow{margin:0 0 3px}
+.fasit-post .sp{font-weight:600; margin:0 0 8px}
+pre.kode.liten{font-size:.78rem; line-height:1.5; padding:10px 12px; margin:0 0 8px}
+.fasit-post .sv{margin:0; color:var(--svak); font-size:.93rem}
+.fasit-post .sv b{color:var(--rett); font-weight:600}
+.fasit-post code{font-family:"JetBrains Mono",monospace; font-size:.85em; background:var(--kode); padding:1px 5px; border-radius:4px; color:var(--tekst)}
+
+/* ---------- klassemodus: større for projektor ---------- */
+body[data-modus="klasse"] .kort{font-size:1.16rem}
+body[data-modus="klasse"] .sporsmal{font-size:1.62rem}
+body[data-modus="klasse"] pre.kode{font-size:1rem; line-height:1.65}
+body[data-modus="klasse"] .alt{padding:15px 17px}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important; animation:none !important}
+}
+@media print{ .topp,.fot{display:none} }
+</style>
+</head>
+<body>
+<header class="topp">
+  <div class="topp-rad">
+    <span class="merkenavn">HTML-quiz</span>
+    <span class="eyebrow" id="modusmerke">1IMA · programmering</span>
+    <span class="topp-hoyre">
+      <span class="eyebrow teller" id="teller"></span>
+    </span>
+  </div>
+  <div class="topp-rad">
+    <div class="stolpe" style="flex:1"><span id="stolpe"></span></div>
+  </div>
+</header>
+
+<main class="skall">
+
+  <!-- ============ START ============ -->
+  <section id="start">
+    <div class="kort rund">
+      <p class="eyebrow">18 spørsmål · ca. 20 minutter</p>
+      <h1>Hva sitter fra HTML-kurset?</h1>
+      <p class="lead">Spørsmålene handler om skjelettet, overskrifter og tekst, bilder, lister og
+      tabeller. Noen ber deg lese kode og forutsi resultatet, andre ber deg finne feilen.
+      Du får forklaringen med én gang.</p>
+
+      <ul class="temaliste">
+        <li>skjelett.html</li><li>tekst.html</li><li>bilder.html</li><li>lister.html</li><li>tabeller.html</li>
+      </ul>
+
+      <div class="moduser">
+        <button class="modus" data-start="elev">
+          <b>Elevmodus</b>
+          <span>Du svarer selv og får rett eller galt med én gang. Poengsum og fasit til slutt.</span>
+        </button>
+        <button class="modus" data-start="klasse">
+          <b>Klassemodus</b>
+          <span>Stor skrift for projektor. Svaret er skjult til du klikker «Vis svar», så klassen rekker å tenke.</span>
+        </button>
+      </div>
+
+      <p class="lead" style="margin:22px 0 0; font-size:.86rem">
+        Tastatur: <span class="mono">1</span>–<span class="mono">4</span> velger svar,
+        <span class="mono">Enter</span> går videre.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="quiz" hidden>
+    <span class="fane" id="fane">fil.html</span>
+    <div class="kort" id="kort">
+      <p class="eyebrow" id="nummer">Spørsmål 1</p>
+      <p class="sporsmal" id="sporsmal"></p>
+      <pre class="kode" id="kode" hidden></pre>
+      <div class="valg" id="valg"></div>
+      <div class="tilbake" id="tilbake" hidden aria-live="polite">
+        <p class="dom" id="dom"></p>
+        <p id="forklaring"></p>
+      </div>
+      <div class="fot">
+        <button class="knapp stille" id="forrige" hidden>Forrige</button>
+        <button class="knapp" id="vissvar" hidden>Vis svar</button>
+        <button class="knapp" id="neste" hidden>Neste <span class="pil">→</span></button>
+        <span class="hint" id="hint"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLUTT ============ -->
+  <section id="slutt" hidden>
+    <div class="kort rund">
+      <p class="eyebrow" id="sluttmerke">Resultat</p>
+      <h1 id="slutttittel">Ferdig</h1>
+      <div class="score" id="scoreboks">
+        <b id="scoretall">0/18</b>
+        <span id="scoretekst"></span>
+      </div>
+      <table class="temascore" id="temascore">
+        <thead><tr><th>Tema</th><th>Riktig</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="fasit" id="fasit"></div>
+      <div class="fot">
+        <button class="knapp" id="paanytt">Ta quizen på nytt</button>
+        <button class="knapp stille" id="baremine" hidden>Øv på det du bommet på</button>
+        <button class="knapp stille" id="tilstart">Til forsiden</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+"use strict";
+
+const SPORSMAL = [
+  {
+    fil:"skjelett.html", tema:"Skjelettet",
+    sp:"Hvilken linje bestemmer teksten som står i nettleserfanen?",
+    alt:[
+      {t:'<code>&lt;h1&gt;Min side&lt;/h1&gt;</code>'},
+      {t:'<code>&lt;title&gt;Min side&lt;/title&gt;</code>', r:true},
+      {t:'<code>&lt;head&gt;Min side&lt;/head&gt;</code>'},
+      {t:'<code>&lt;p&gt;Min side&lt;/p&gt;</code>'}
+    ],
+    f:"<code>&lt;title&gt;</code> ligger i <code>&lt;head&gt;</code> og vises bare i fanen – aldri på selve siden. <code>&lt;h1&gt;</code> er den største overskriften <em>på</em> siden."
+  },
+  {
+    fil:"skjelett.html", tema:"Skjelettet",
+    sp:"Du legger dette avsnittet inn i <code>&lt;head&gt;</code> i stedet for <code>&lt;body&gt;</code>. Hva skjer?",
+    kode:'<head>\n  <meta charset="UTF-8">\n  <title>Om meg</title>\n  <p>Hei!</p>\n</head>',
+    alt:[
+      {t:'Teksten «Hei!» vises øverst på siden'},
+      {t:'Teksten «Hei!» vises i fanen'},
+      {t:'Teksten «Hei!» vises ikke på siden', r:true},
+      {t:'Siden slutter å virke og blir helt hvit'}
+    ],
+    f:"Alt som skal <em>vises</em>, må ligge i <code>&lt;body&gt;</code>. <code>&lt;head&gt;</code> er informasjon <em>om</em> siden: tegnsett, språk og tittel i fanen."
+  },
+  {
+    fil:"tekst.html", tema:"Overskrifter og tekst",
+    sp:"Hvor mange nivåer av overskrifter finnes det i HTML?",
+    alt:[
+      {t:'Tre'},
+      {t:'Seks', r:true},
+      {t:'Sju'},
+      {t:'Så mange du vil'}
+    ],
+    f:"Fra <code>&lt;h1&gt;</code> til <code>&lt;h6&gt;</code>. Skriver du <code>&lt;h7&gt;</code>, finnes ikke elementet – nettleseren viser det som helt vanlig tekst."
+  },
+  {
+    fil:"tekst.html", tema:"Overskrifter og tekst",
+    sp:"Hva vises på siden?",
+    kode:'<p>Hei     du       der</p>',
+    alt:[
+      {t:'Hei du der', r:true},
+      {t:'Hei     du       der – med alle mellomrommene'},
+      {t:'Hei, du og der på hver sin linje'},
+      {t:'Ingenting – for mange mellomrom er en feil'}
+    ],
+    f:"Nettleseren slår sammen flere mellomrom til ett, og bryr seg ikke om linjeskift i koden. Vil du ha luft, må du bruke et nytt <code>&lt;p&gt;</code>-element."
+  },
+  {
+    fil:"tekst.html", tema:"Overskrifter og tekst",
+    sp:"Hva er feil i denne linja?",
+    kode:'<h1>Velkommen</h2>',
+    alt:[
+      {t:'Overskrifter kan ikke stå alene'},
+      {t:'<code>&lt;h1&gt;</code> må ligge i <code>&lt;head&gt;</code>'},
+      {t:'Det er ingen feil'},
+      {t:'Sluttaggen er feil nivå – den skal være <code>&lt;/h1&gt;</code>', r:true}
+    ],
+    f:"Start- og sluttagg må være samme element. I VS Code endres sluttaggen automatisk når du endrer starttaggen – så denne feilen oppstår som regel når man skriver sluttaggen for hånd i tillegg."
+  },
+  {
+    fil:"tekst.html", tema:"Overskrifter og tekst",
+    sp:"Hva vises på siden?",
+    kode:'<!-- <h1>Hemmelig</h1> -->\n<p>Synlig</p>',
+    alt:[
+      {t:'Både «Hemmelig» og «Synlig»'},
+      {t:'Bare «Synlig»', r:true},
+      {t:'Bare «Hemmelig»'},
+      {t:'Ingenting'}
+    ],
+    f:"<code>&lt;!-- --&gt;</code> er en kommentar. Nettleseren hopper over alt som ligger inni. Snarvei i VS Code: <code>Ctrl + '</code>"
+  },
+  {
+    fil:"bilder.html", tema:"Bilder",
+    sp:"Hva er <code>alt</code>-teksten til?",
+    kode:'<img src="foss.jpg" alt="En foss som faller ned i et grønt vann">',
+    alt:[
+      {t:'Den vises som en bildetekst under bildet'},
+      {t:'Den bestemmer hvor stort bildet blir'},
+      {t:'Den beskriver bildet for skjermlesere, og vises hvis bildet ikke lastes', r:true},
+      {t:'Den sier hvor bildefilen ligger'}
+    ],
+    f:"<code>src</code> sier <em>hvor bildet ligger</em>, <code>alt</code> sier <em>hva det viser</em>. Blinde og svaksynte bruker skjermleser, og den kan bare lese alt-teksten."
+  },
+  {
+    fil:"bilder.html", tema:"Bilder",
+    sp:"Hva er feil her?",
+    kode:'<image src="katt.jpg" alt="En sovende katt">',
+    alt:[
+      {t:'Elementet heter <code>img</code>, ikke <code>image</code>', r:true},
+      {t:'Det mangler en <code>&lt;/image&gt;</code>'},
+      {t:'<code>alt</code> må stå før <code>src</code>'},
+      {t:'Bildefiler må være .png'}
+    ],
+    f:"Elementet heter <code>&lt;img&gt;</code>. Og det har ingen sluttagg i det hele tatt – all informasjonen ligger i attributtene."
+  },
+  {
+    fil:"bilder.html", tema:"Bilder",
+    sp:"Bildefilen er egentlig 400 × 300 piksler. Hva skjer med høyden her?",
+    kode:'<img src="foss.jpg" alt="En foss" width="100">',
+    alt:[
+      {t:'Høyden blir stående på 300, så bildet blir klemt sammen'},
+      {t:'Høyden skaleres ned automatisk, så bildet beholder formen', r:true},
+      {t:'Høyden blir også 100, så bildet blir kvadratisk'},
+      {t:'Bildet vises ikke før du også setter <code>height</code>'}
+    ],
+    f:"Setter du bare <code>width</code>, regner nettleseren ut høyden selv (her 75). Setter du <em>begge</em> med tall som ikke passer sammen, blir bildet forvrengt."
+  },
+  {
+    fil:"bilder.html", tema:"Bilder",
+    sp:"Denne linja virker ikke. Hva er feil?",
+    kode:'<img src="https://picsum.photos/200 alt="Et tilfeldig bilde">',
+    alt:[
+      {t:'Adressen mangler filnavn'},
+      {t:'<code>alt</code> kan ikke stå etter <code>src</code>'},
+      {t:'<code>&lt;img&gt;</code> må ha <code>width</code>'},
+      {t:'Det mangler et anførselstegn etter <code>200</code>', r:true}
+    ],
+    f:"Anførselstegn kommer alltid to og to. Legg merke til at fargeleggingen «lekker» videre bortover linja – det er akkurat det signalet VS Code gir deg når ett mangler."
+  },
+  {
+    fil:"lister.html", tema:"Lister",
+    sp:"Du skal skrive framgangsmåten i en oppskrift, der rekkefølgen betyr noe. Hvilket element bruker du?",
+    alt:[
+      {t:'<code>&lt;ul&gt;</code>'},
+      {t:'<code>&lt;li&gt;</code>'},
+      {t:'<code>&lt;ol&gt;</code>', r:true},
+      {t:'<code>&lt;list&gt;</code>'}
+    ],
+    f:"<code>ol</code> = <em>ordered list</em> = nummerert. <code>ul</code> = <em>unordered list</em> = kuler, for ting der rekkefølgen ikke spiller noen rolle."
+  },
+  {
+    fil:"lister.html", tema:"Lister",
+    sp:"Hva vises på siden?",
+    kode:'<ul>\n  <li>Fiske</li>\n  Gaming\n  <li>Fotball</li>\n</ul>',
+    alt:[
+      {t:'Tre punkter, alle med kule foran'},
+      {t:'To punkter med kule, og «Gaming» som løs tekst uten kule', r:true},
+      {t:'Bare «Fiske» og «Fotball» – «Gaming» forsvinner helt'},
+      {t:'En feilmelding fra nettleseren'}
+    ],
+    f:"Bare det som ligger inni et <code>&lt;li&gt;</code>, blir et listepunkt. Teksten forsvinner ikke – den bare henger der uten kule, og det ser rart ut."
+  },
+  {
+    fil:"lister.html", tema:"Lister",
+    sp:"Hva er feil her?",
+    kode:'<ul>\n  <li>Engelsk</li>\n  <li>Naturfag</li>\n</ol>',
+    alt:[
+      {t:'Lista åpnes med <code>&lt;ul&gt;</code>, men lukkes med <code>&lt;/ol&gt;</code>', r:true},
+      {t:'<code>&lt;li&gt;</code> mangler sluttagg'},
+      {t:'En liste må ha minst tre punkter'},
+      {t:'Det er ingen feil'}
+    ],
+    f:"Åpner du med <code>&lt;ul&gt;</code>, må du lukke med <code>&lt;/ul&gt;</code>. Klikk på starttaggen i VS Code, så lyser makkeren opp – da ser du det med én gang."
+  },
+  {
+    fil:"lister.html", tema:"Lister",
+    sp:"Hvor kommer tallene 1, 2, 3 foran punktene i en <code>&lt;ol&gt;</code> fra?",
+    alt:[
+      {t:'Du skriver dem selv inni hvert <code>&lt;li&gt;</code>'},
+      {t:'Fra attributtet <code>number="1"</code>'},
+      {t:'Fra <code>&lt;li&gt;</code>-taggen, som alltid gir tall'},
+      {t:'Nettleseren lager dem automatisk', r:true}
+    ],
+    f:"Nettleseren teller punktene selv. Derfor stemmer nummereringen alltid, også når du setter inn et nytt punkt midt i lista."
+  },
+  {
+    fil:"tabeller.html", tema:"Tabeller",
+    sp:"<code>&lt;table&gt;</code> lager selve tabellen. Hvilket element lager én rad?",
+    alt:[
+      {t:'<code>&lt;td&gt;</code>'},
+      {t:'<code>&lt;tr&gt;</code>', r:true},
+      {t:'<code>&lt;th&gt;</code>'},
+      {t:'<code>&lt;row&gt;</code>'}
+    ],
+    f:"<code>tr</code> = <em>table row</em>. Inni raden ligger cellene. Det er samme mønster som lister: et element rundt, og elementer for hver bit inni."
+  },
+  {
+    fil:"tabeller.html", tema:"Tabeller",
+    sp:"Hva er forskjellen på <code>&lt;th&gt;</code> og <code>&lt;td&gt;</code>?",
+    alt:[
+      {t:'<code>&lt;th&gt;</code> er en overskriftscelle, <code>&lt;td&gt;</code> er en vanlig celle', r:true},
+      {t:'<code>&lt;th&gt;</code> bestemmer høyden, <code>&lt;td&gt;</code> bestemmer bredden'},
+      {t:'<code>&lt;th&gt;</code> er øverste rad, <code>&lt;td&gt;</code> er nederste'},
+      {t:'Ingen – de gjør nøyaktig det samme'}
+    ],
+    f:"<code>th</code> = <em>table header</em>, <code>td</code> = <em>table data</em>. Nettleseren viser <code>&lt;th&gt;</code> med fet, midtstilt tekst helt av seg selv."
+  },
+  {
+    fil:"tabeller.html", tema:"Tabeller",
+    sp:"Hvor mange rader og kolonner får denne tabellen?",
+    kode:'<table>\n  <tr>\n    <th>Fag</th>\n    <th>Karakter</th>\n  </tr>\n  <tr>\n    <td>Matte</td>\n    <td>5</td>\n  </tr>\n</table>',
+    alt:[
+      {t:'4 rader og 1 kolonne'},
+      {t:'1 rad og 4 kolonner'},
+      {t:'2 rader og 2 kolonner', r:true},
+      {t:'2 rader og 4 kolonner'}
+    ],
+    f:"Hver <code>&lt;tr&gt;</code> er én rad. Antall celler inni én rad gir antall kolonner. Her: to rader med to celler i hver."
+  },
+  {
+    fil:"tabeller.html", tema:"Tabeller",
+    sp:"Denne tabellen ser rar ut i nettleseren. Hva er feil?",
+    kode:'<table>\n  <tr>\n    <td>Oslo</td>\n    <td>Bergen</td>\n  <tr>\n    <td>Tromsø</td>\n    <td>Bodø</td>\n  </tr>\n</table>',
+    alt:[
+      {t:'Den første <code>&lt;tr&gt;</code> blir aldri lukket med <code>&lt;/tr&gt;</code>', r:true},
+      {t:'Cellene skulle vært <code>&lt;th&gt;</code>'},
+      {t:'<code>&lt;table&gt;</code> mangler <code>width</code>'},
+      {t:'Det er ingen feil'}
+    ],
+    f:"Rad 1 åpnes, men lukkes aldri. Nøyaktig samme type feil som en <code>&lt;li&gt;</code> uten sluttagg – bare i en tabell. Trykk <code>Shift + Alt + F</code> i VS Code: rader som ikke rykker inn som forventet, avslører seg selv."
+  }
+];
+
+/* ---------- syntaksfarging ---------- */
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+function attributter(rest){
+  let ut = "";
+  const re = /("[^"]*"?)|([^"]+)/g;
+  let m;
+  while ((m = re.exec(rest))) {
+    if (m[1]) ut += '<span class="c-str">' + esc(m[1]) + "</span>";
+    else ut += esc(m[2]).replace(/([a-zA-Z-]+)=/g, '<span class="c-attr">$1</span><span class="c-punkt">=</span>');
+  }
+  return ut;
+}
+
+function tagg(t){
+  let kropp = t.slice(1, -1), skrastrek = "";
+  if (kropp.startsWith("/")) { skrastrek = "/"; kropp = kropp.slice(1); }
+  const sp = kropp.search(/\s/);
+  const navn = sp === -1 ? kropp : kropp.slice(0, sp);
+  const rest = sp === -1 ? "" : kropp.slice(sp);
+  return '<span class="c-punkt">&lt;' + skrastrek + '</span><span class="c-tagg">' + esc(navn) + "</span>" +
+         (rest ? attributter(rest) : "") + '<span class="c-punkt">&gt;</span>';
+}
+
+function farge(src){
+  let ut = "";
+  const re = /(<!--[\s\S]*?-->)|(<\/?[a-zA-Z][^>]*>)|([\s\S]+?(?=<|$))/g;
+  let m;
+  while ((m = re.exec(src))) {
+    if (m[1]) ut += '<span class="c-kom">' + esc(m[1]) + "</span>";
+    else if (m[2]) ut += tagg(m[2]);
+    else if (m[3]) ut += esc(m[3]);
+  }
+  return ut;
+}
+
+/* ---------- tilstand ---------- */
+const $ = id => document.getElementById(id);
+let rekke = [], i = 0, svar = [], modus = "elev", laast = false;
+
+function start(m, indekser){
+  modus = m;
+  document.body.dataset.modus = m;
+  rekke = indekser || SPORSMAL.map((_, n) => n);
+  svar = new Array(rekke.length).fill(null);
+  i = 0;
+  $("modusmerke").textContent = m === "klasse" ? "Klassemodus" : "Elevmodus";
+  $("start").hidden = true;
+  $("slutt").hidden = true;
+  $("quiz").hidden = false;
+  vis();
+}
+
+function vis(){
+  const q = SPORSMAL[rekke[i]];
+  laast = false;
+
+  $("fane").textContent = q.fil;
+  $("nummer").textContent = "Spørsmål " + (i + 1) + " av " + rekke.length;
+  $("sporsmal").innerHTML = q.sp;
+
+  const kode = $("kode");
+  if (q.kode) { kode.innerHTML = farge(q.kode); kode.hidden = false; }
+  else { kode.hidden = true; }
+
+  const valg = $("valg");
+  valg.innerHTML = "";
+  q.alt.forEach((a, n) => {
+    const b = document.createElement("button");
+    b.className = "alt";
+    b.type = "button";
+    b.innerHTML = '<span class="tast">' + (n + 1) + '</span><span class="tekst">' + a.t + "</span>";
+    b.addEventListener("click", () => velg(n));
+    valg.appendChild(b);
+  });
+
+  $("tilbake").hidden = true;
+  $("neste").hidden = true;
+  $("vissvar").hidden = modus !== "klasse";
+  $("forrige").hidden = !(modus === "klasse" && i > 0);
+  $("hint").textContent = modus === "klasse"
+    ? "1–4 for å markere · Enter for å vise svaret"
+    : "Trykk 1–4 for å svare";
+
+  $("teller").textContent = String(i + 1).padStart(2, "0") + " / " + rekke.length;
+  $("stolpe").style.width = (i / rekke.length * 100) + "%";
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+function velg(n){
+  const q = SPORSMAL[rekke[i]];
+  const knapper = [...$("valg").children];
+
+  if (modus === "klasse") {
+    if (laast) return;
+    knapper.forEach((b, k) => b.classList.toggle("valgt", k === n));
+    return;
+  }
+  if (laast) return;
+  laast = true;
+  svar[i] = n;
+  fasit(n);
+}
+
+function fasit(valgt){
+  const q = SPORSMAL[rekke[i]];
+  const knapper = [...$("valg").children];
+  const riktig = q.alt.findIndex(a => a.r);
+
+  knapper.forEach((b, k) => {
+    b.disabled = true;
+    b.classList.remove("valgt");
+    if (k === riktig) b.classList.add("riktig");
+    else if (k === valgt) b.classList.add("feil");
+    else b.classList.add("dempet");
+  });
+
+  const t = $("tilbake");
+  if (valgt === null) {
+    t.dataset.svar = "";
+    $("dom").textContent = "Riktig svar";
+    $("dom").style.color = "var(--rett)";
+  } else {
+    const rett = valgt === riktig;
+    t.dataset.svar = rett ? "rett" : "galt";
+    $("dom").style.color = "";
+    $("dom").textContent = rett ? "Riktig" : "Ikke helt";
+  }
+  $("forklaring").innerHTML = q.f;
+  t.hidden = false;
+
+  $("vissvar").hidden = true;
+  $("neste").hidden = false;
+  $("neste").innerHTML = (i === rekke.length - 1 ? "Se resultatet" : "Neste") + ' <span class="pil">→</span>';
+  $("neste").focus();
+  $("hint").textContent = "Enter for å gå videre";
+  laast = true;
+}
+
+function neste(){
+  if (i < rekke.length - 1) { i++; vis(); }
+  else avslutt();
+}
+
+function avslutt(){
+  $("quiz").hidden = true;
+  $("slutt").hidden = false;
+  $("stolpe").style.width = "100%";
+  $("teller").textContent = "ferdig";
+
+  const klasse = modus === "klasse";
+  $("scoreboks").hidden = klasse;
+  $("baremine").hidden = true;
+
+  const temaer = {};
+  let rett = 0;
+  const bom = [];
+
+  rekke.forEach((idx, n) => {
+    const q = SPORSMAL[idx];
+    const fasitn = q.alt.findIndex(a => a.r);
+    const ok = svar[n] === fasitn;
+    if (ok) rett++;
+    if (!ok && !klasse) bom.push({ q: q, valgt: svar[n], fasit: fasitn, idx: idx });
+    if (!temaer[q.tema]) temaer[q.tema] = { r: 0, n: 0 };
+    temaer[q.tema].n++;
+    if (ok) temaer[q.tema].r++;
+  });
+
+  if (klasse) {
+    $("sluttmerke").textContent = "Gjennomgått";
+    $("slutttittel").textContent = "Alle " + rekke.length + " spørsmålene er tatt";
+    $("temascore").hidden = true;
+    $("fasit").innerHTML = "";
+  } else {
+    $("temascore").hidden = false;
+    const pst = Math.round(rett / rekke.length * 100);
+    $("sluttmerke").textContent = "Resultat";
+    $("slutttittel").textContent =
+      pst === 100 ? "Alt riktig." :
+      pst >= 80 ? "Sterkt." :
+      pst >= 55 ? "Godt på vei." : "Verdt en ny runde.";
+    $("scoretall").textContent = rett + "/" + rekke.length;
+    $("scoretekst").textContent = "riktige svar · " + pst + " %";
+
+    const tbody = $("temascore").querySelector("tbody");
+    tbody.innerHTML = "";
+    Object.keys(temaer).forEach(navn => {
+      const d = temaer[navn];
+      const tr = document.createElement("tr");
+      tr.innerHTML = "<td>" + navn + "</td><td>" +
+        '<span class="meter"><i style="width:' + (d.r / d.n * 100) + '%"></i></span>' +
+        d.r + " av " + d.n + "</td>";
+      tbody.appendChild(tr);
+    });
+
+    const f = $("fasit");
+    f.innerHTML = "";
+    if (bom.length) {
+      const h = document.createElement("h2");
+      h.textContent = bom.length === 1 ? "Det ene du bommet på" : "De " + bom.length + " du bommet på";
+      f.appendChild(h);
+      bom.forEach(b => {
+        const d = document.createElement("div");
+        d.className = "fasit-post";
+        d.innerHTML = '<p class="eyebrow">' + b.q.fil + '</p>' +
+          '<p class="sp">' + b.q.sp + '</p>' +
+          (b.q.kode ? '<pre class="kode liten">' + farge(b.q.kode) + "</pre>" : "") +
+          '<p class="sv">Riktig svar: <b>' + b.q.alt[b.fasit].t + "</b></p>" +
+          '<p class="sv">' + b.q.f + "</p>";
+        f.appendChild(d);
+      });
+      $("baremine").hidden = false;
+      $("baremine").onclick = () => start("elev", bom.map(b => b.idx));
+    }
+  }
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+/* ---------- hendelser ---------- */
+document.querySelectorAll("[data-start]").forEach(b =>
+  b.addEventListener("click", () => start(b.dataset.start))
+);
+$("neste").addEventListener("click", neste);
+$("vissvar").addEventListener("click", () => {
+  const valgte = [...$("valg").children].findIndex(b => b.classList.contains("valgt"));
+  fasit(valgte === -1 ? null : valgte);
+});
+$("forrige").addEventListener("click", () => { if (i > 0) { i--; vis(); } });
+$("paanytt").addEventListener("click", () => start(modus));
+$("tilstart").addEventListener("click", () => {
+  $("slutt").hidden = true;
+  $("quiz").hidden = true;
+  $("start").hidden = false;
+  $("stolpe").style.width = "0%";
+  $("teller").textContent = "";
+  $("modusmerke").textContent = "1IMA · programmering";
+});
+
+document.addEventListener("keydown", e => {
+  if ($("quiz").hidden) return;
+  if (e.key >= "1" && e.key <= "4") {
+    const b = $("valg").children[+e.key - 1];
+    if (b && !b.disabled) { b.click(); e.preventDefault(); }
+  } else if (e.key === "Enter" || e.key === "ArrowRight") {
+    if (!$("neste").hidden) { neste(); e.preventDefault(); }
+    else if (!$("vissvar").hidden) { $("vissvar").click(); e.preventDefault(); }
+  } else if (e.key === "ArrowLeft") {
+    if (!$("forrige").hidden) { $("forrige").click(); e.preventDefault(); }
+  }
+});
+</script>
+
+</body>
+</html>
