@@ -1,0 +1,115 @@
+=====================================================================
+EKSTRAOPPGAVE 3 (VANSKELIG): FRA TEKST TIL HTML
+=====================================================================
+
+SLIK GJOR DU:
+1. Lag en ny fil, for eksempel studietur.html, og start med
+   ! + ENTER.
+2. Plasser alt innholdet nedenfor i passende HTML-elementer.
+   Ikke endre på teksten - jobben din er å velge riktige elementer.
+   Denne gangen får du ingen liste over elementer: les teksten
+   nøye, og tenk over hva hver del ER - da vet du hvilket element
+   den skal ha.
+3. Der det står [ BILDE: ... ], skal du finne passende bilder på
+   nettet, med bildetekst der det kreves.
+4. Ekstra krav: programtabellen skal bruke sammenslåing av celler
+   (colspan og/eller rowspan) der innholdet ber om det.
+5. Sjekk resultatet med Show Preview eller Go Live - og sjekk
+   koden din med Format Document til slutt.
+
+=====================================================================
+
+
+Vg1 IM inntar Bergen: To dager med medier, regn og opplevelser
+
+I oktober reiser hele vg1 IM (forkortelsen står for
+informasjonsteknologi og medieproduksjon, og bør forklares når
+musepekeren holdes over den) på studietur til Bergen. Programmet
+er nå klart, og det er bare å begynne å glede seg.
+
+[ BILDE 1: Finn et bilde av Bergen, gjerne av Bryggen eller
+  utsikten fra Fløyen. Bildet skal ha en bildetekst som også
+  forteller hvor bildet er hentet fra. ]
+
+Programmet
+
+Tabellen viser programmet for begge dagene. Den skal ha
+tabelloverskriften "Program for studieturen". Merk deg to ting
+når du bygger tabellen: Filmworkshopen på dag 1 varer i BEGGE
+øktene etter lunsj (én sammenhengende aktivitet over to rader),
+og lunsjen klokka 12.00 er felles begge dager (én celle som
+dekker begge dagkolonnene).
+
+Tid    | Dag 1                  | Dag 2
+09.00  | Avreise med buss       | Besøk hos Mediehuset Vest
+12.00  | Felles lunsj
+13.00  | Filmworkshop           | Omvisning på Fløyen
+15.00  | (workshopen fortsetter)| Hjemreise
+
+Om besøket hos Mediehuset Vest
+
+Høydepunktet på dag 2 er besøket hos det oppdiktede Mediehuset
+Vest, der elevene får se hvordan en ekte nyhetsredaksjon jobber.
+Der venter det også en overraskelse: Klassen skal få prøve seg
+som nyhetsankere i et ekte studio.
+
+Faglærer Jonas Lie gleder seg mest av alt til akkurat dette:
+
+    Mange av elevene har aldri stått foran et profesjonelt
+    kamera. Det øyeblikket - når studiolampene tennes og
+    teleprompteren ruller - det glemmer de aldri. Det er derfor
+    vi reiser på studietur.
+
+Det sa han da programmet ble presentert for klassen.
+
+Som forberedelse skal klassen se dokumentarserien Bak skjermen
+før avreise. Tittelen på serien skal merkes som en verkstittel.
+Elevene skal også lære om KI (kunstig intelligens - nok en
+forkortelse som skal forklares med musepekeren) og hvordan
+redaksjoner bruker det i arbeidet sitt.
+
+[ BILDE 2: Finn et bilde av et TV-studio eller en nyhetsredaksjon.
+  Også dette bildet skal ha bildetekst med kilde. ]
+
+Pakkeliste
+
+Alle må ha med seg dette. Legg merke til at to av punktene har
+egne underpunkter:
+
+- Klær
+    - Regnjakke (det ER Bergen)
+    - Gode sko å gå i
+- Teknisk utstyr
+    - Mobil med fulladet batteri
+    - Lader
+- Matpakke til bussturen
+- Gyldig skolebevis
+
+Regler for turen
+
+Reglene gjelder i denne rekkefølgen, og rekkefølgen er ikke
+tilfeldig - sikkerhet kommer alltid først:
+
+1. Følg beskjeder fra lærerne til enhver tid
+2. Møt presis til alle oppmøtetidspunkter
+3. Hold deg sammen med gruppa di
+4. Filming og fotografering av andre krever samtykke
+
+En av elevene oppsummerte forventningene slik i klassens time:
+Dette blir årets desidert beste uke - og et sitat som kort som
+dette skal selvsagt stå inne i setningen, med anførselstegn som
+kommer av seg selv.
+
+Praktisk informasjon
+
+Turen koster ingenting, men skolen trenger påmelding innen
+1. oktober. Elever som trenger tilrettelegging, tar kontakt så
+snart som mulig. Under den vannrette streken nederst på siden
+skal kontaktinformasjonen stå - i elementet som er laget for
+akkurat kontaktinfo:
+
+Kontaktlærer Jonas Lie
+jonas.lie@skolen-var.no
+Telefon: 99 88 77 66
+
+Skrevet av skoleavisredaksjonen, 26. august 2026
