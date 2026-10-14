@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML, CSS og Box Model - Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="w-full max-w-2xl bg-slate-800 rounded-2xl shadow-xl border border-slate-700 overflow-hidden">
+        
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-center">
+            <h1 class="text-2xl font-bold tracking-tight">HTML, CSS og Box Model Quiz</h1>
+            <p id="progress-text" class="text-blue-100 text-sm mt-1">Spørsmål 1 av 20</p>
+            <div class="w-full bg-blue-900/50 h-2 rounded-full mt-4 overflow-hidden">
+                <div id="progress-bar" class="bg-white h-full transition-all duration-300" style="width: 5%"></div>
+            </div>
+        </div>
+
+        <!-- Quiz Body -->
+        <div class="p-6 sm:p-8">
+            <div id="question-container">
+                <h2 id="question-text" class="text-lg sm:text-xl font-semibold mb-6 text-slate-200"></h2>
+                <div id="options-container" class="space-y-3"></div>
+            </div>
+
+            <!-- Feedback & Rationale -->
+            <div id="feedback-container" class="hidden mt-6 p-4 rounded-xl bg-slate-700/50 border border-slate-600">
+                <p id="feedback-title" class="font-bold text-base mb-1"></p>
+                <p id="feedback-rationale" class="text-sm text-slate-300"></p>
+                <button id="next-btn" class="mt-4 w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-lg transition-colors cursor-pointer">
+                    Neste spørsmål
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="hidden p-8 text-center">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-blue-600/20 text-blue-400 rounded-full text-3xl font-bold mb-4 border border-blue-500/30">
+                <span id="score-percentage"></span>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Quiz Fullført!</h2>
+            <p id="score-text" class="text-slate-300 mb-6"></p>
+            <button onclick="restartQuiz()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-2.5 rounded-lg transition-colors cursor-pointer">
+                Ta quizen på nytt
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "Hva står akronymet HTML for?",
+                options: [
+                    { text: "HyperText Markup Language", isCorrect: true, rationale: "HTML er standard markeringsspråk for nettsider og står for HyperText Markup Language." },
+                    { text: "High Tech Modern Language", isCorrect: false, rationale: "Dette er en oppfunnet betegnelse og ikke det HTML står for." },
+                    { text: "HyperTransfer Markup Logic", isCorrect: false, rationale: "Transfer og Logic brukes ikke i denne sammenhengen." },
+                    { text: "Home Tool Markup Language", isCorrect: false, rationale: "HTML har ingenting med 'Home Tool' å gjøre." }
+                ],
+                hint: "Det har med 'Hyper' og 'Markup' å gjøre."
+            },
+            {
+                question: "Hvilken HTML-tag brukes til å definere hovedoverskriften (største overskrift) på en nettside?",
+                options: [
+                    { text: "`<h1>`", isCorrect: true, rationale: "`<h1>` representerer den viktigste og største overskriften på en side." },
+                    { text: "`<head>`", isCorrect: false, rationale: "`<head>` inneholder metadata om dokumentet, ikke overskriftstekst i brødteksten." },
+                    { text: "`<h6>`", isCorrect: false, rationale: "`<h6>` brukes for den minste overskriftsnivået." },
+                    { text: "`<header>`", isCorrect: false, rationale: "`<header>` er en semantisk seksjonselement, ikke selve overskriftstagsen." }
+                ],
+                hint: "Den har tallet 1 i seg."
+            },
+            {
+                question: "Hva er hensikten med `<!DOCTYPE html>` øverst i et dokument?",
+                options: [
+                    { text: "Å fortelle nettleseren hvilken HTML-versjon som brukes (HTML5)", isCorrect: true, rationale: "DOCTYPE sikrer at nettleseren renderer siden i standardmodus for HTML5." },
+                    { text: "Å starte selve nettsideinnholdet", isCorrect: false, rationale: "Selve innholdet startes med `<html>`-taggen." },
+                    { text: "Å importere CSS-stilark", isCorrect: false, rationale: "CSS importeres vanligvis via `<link>` i `<head>`." },
+                    { text: "Å avslutte HTML-dokumentet", isCorrect: false, rationale: "Dokumentet avsluttes med `</html>`." }
+                ],
+                hint: "Det handler om dokumenttype og versjon for nettleseren."
+            },
+            {
+                question: "I kodesnutten du delte, hva gjør `border: 3px solid brown;` på `img`-elementene?",
+                options: [
+                    { text: "Legger til en brun, heltrukken ramme som er 3 piksler tykk rundt bildene", isCorrect: true, rationale: "Egenskapen setter tykkelse, stil (solid) og farge på rammen rundt elementet." },
+                    { text: "Gjør bildet 3 piksler stort og brunt", isCorrect: false, rationale: "Det endrer ikke bildets totale dimensjoner, kun rammen rundt." },
+                    { text: "Setter en bakgrunnsfarge på 3 piksler", isCorrect: false, rationale: "Bakgrunnsfarge styres av `background-color`." },
+                    { text: "Legger til 3 piksler marg på utsiden av bildet", isCorrect: false, rationale: "Marg styres av `margin`-egenskapen." }
+                ],
+                hint: "Tenk på utseendet på kanten rundt bildet."
+            },
+            {
+                question: "Hva gjør `padding: 10px;` i CSS-boksen for bildene i koden din?",
+                options: [
+                    { text: "Legger til 10 piksler avstand mellom innholdet (bildet) og rammen på innsiden", isCorrect: true, rationale: "Padding er avstanden mellom elementets innhold og dens egen ramme." },
+                    { text: "Skyver nabobildene 10 piksler unna på utsiden", isCorrect: false, rationale: "Det er `margin` som styrer avstanden til andre elementer på utsiden." },
+                    { text: "Gjør bildet 10 piksler bredere totalt", isCorrect: false, rationale: "Padding kommer i tillegg til bildets opprinnelige dimensjoner i boksmodellen." },
+                    { text: "Endrer størrelsen på bildefilen", isCorrect: false, rationale: "Bildefilen på serveren påvirkes ikke av CSS padding." }
+                ],
+                hint: "Det er avstanden på *innsiden* av rammen."
+            },
+            {
+                question: "Hva er funksjonen til `margin: 10px;` i eksemplet ditt?",
+                options: [
+                    { text: "Skaper tomrom på utsiden av bildets ramme, slik at det blir avstand til andre elementer", isCorrect: true, rationale: "Margin styrer avstanden utenfor elementets ramme." },
+                    { text: "Lager en farget ramme rundt bildet", isCorrect: false, rationale: "Rammer lages med `border`." },
+                    { text: "Legger til luft inni bildet", isCorrect: false, rationale: "Luft på innsiden av rammen er `padding`." },
+                    { text: "Gjør bildet gjennomsiktig", isCorrect: false, rationale: "Gjennomsiktighet styres med `opacity`." }
+                ],
+                hint: "Det er avstanden på *utsiden* av rammen."
+            },
+            {
+                question: "I CSS Box Model, hva kommer innerst mot selve innholdet?",
+                    options: [
+                    { text: "Selve innholdet (f.eks. tekst eller bilde)", isCorrect: true, rationale: "Kjernen i boksmodellen er innholdet selv." },
+                    { text: "Padding", isCorrect: false, rationale: "Padding ligger utenfor innholdet, men på innsiden av rammen." },
+                    { text: "Border", isCorrect: false, rationale: "Border ligger utenfor padding." },
+                    { text: "Margin", isCorrect: false, rationale: "Margin ligger ytterst." }
+                ],
+                hint: "Hva er detboksen faktisk inneholder?"
+            },
+            {
+                question: "Hvilken rekkefølge har lagene i CSS Box Model fra innerst til ytterst?",
+                options: [
+                    { text: "Innhold -> Padding -> Border -> Margin", isCorrect: true, rationale: "Dette er den klassiske rekkefølgen i boksmodellen." },
+                    { text: "Margin -> Border -> Padding -> Innhold", isCorrect: false, rationale: "Dette er motsatt rekkefølge (ytterst til innerst)." },
+                    { text: "Innhold -> Margin -> Border -> Padding", isCorrect: false, rationale: "Margin ligger helt ytterst, ikke rett etter innhold." },
+                    { text: "Border -> Padding -> Innhold -> Margin", isCorrect: false, rationale: "Innholdet er alltid i sentrum." }
+                ],
+                hint: "Tenk på rekkefølgen fra elementets kjerne og utover mot naboelementene."
+            },
+            {
+                question: "Hvordan velger man et HTML-element med en spesiell `id` i CSS?",
+                options: [
+                    { text: "Med hashtag/emneknagg foran navnet (f.eks. `#minId`)", isCorrect: true, rationale: "ID-velgere i CSS starter alltid med `#`." },
+                    { text: "Med et punktum foran navnet (f.eks. `.minKlasse`)", isCorrect: false, rationale: "Punktum brukes for klasser, ikke ID-er." },
+                    { text: "Med en stjerne foran navnet (f.eks. `*minId`)", isCorrect: false, rationale: "Stjernen brukes som en universalvelger for alle elementer." },
+                    { text: "Ved å skrive `id=` foran i CSS", isCorrect: false, rationale: "CSS bruker ikke `id=` i stilarket." }
+                ],
+                hint: "Tegnet brukes også på Twitter/X for hashtags."
+            },
+            {
+                question: "Hvordan velger man et HTML-element med en spesifikk `class` i CSS?",
+                options: [
+                    { text: "Med et punktum foran navnet (f.eks. `.minKlasse`)", isCorrect: true, rationale: "Klassevelgere i CSS starter alltid med et punktum `.`." },
+                    { text: "Med en hashtag foran navnet (f.eks. `#minKlasse`)", isCorrect: false, rationale: "Hashtag brukes for ID-er." },
+                    { text: "Med en skråstrek (f.eks. `/minKlasse`)", isCorrect: false, rationale: "Skråstrek brukes ikke til klassevelgere." },
+                    { text: "Med `class:` foran navnet", isCorrect: false, rationale: "Syntaksen krever kun punktum etterfulgt av klassenavnet." }
+                ],
+                hint: "Det er et lite prikk-tegn."
+            },
+            {
+                question: "Hva er hovedforskjellen mellom en HTML `id` og en `class`?",
+                options: [
+                    { text: "En `id` må være unik og kan bare brukes på ett element per side, mens en `class` kan brukes på flere elementer", isCorrect: true, rationale: "ID-er identifiserer ett unikt element, mens klasser kan gjenbrukes på tvers av mange elementer." },
+                    { text: "En `class` kan bare brukes på bilder, mens `id` brukes på tekst", isCorrect: false, rationale: "Både klasser og ID-er kan brukes på alle typer HTML-elementer." },
+                    { text: "Det er ingen forskjell, de betyr det samme", isCorrect: false, rationale: "De har ulik spesifisitet og bruksområde i HTML/CSS." },
+                    { text: "En `id` skrives i CSS med punktum, mens `class` bruker hashtag", isCorrect: false, rationale: "Det er omvendt (`#` for id, `.` for class)." }
+                ],
+                hint: "Tenk på om navnet kan gjenbrukes flere ganger på samme nettside."
+            },
+            {
+                question: "Hva gjør egenskapen `background-color: lightblue;` i stilen for bildene?",
+                options: [
+                    { text: "Gir elementet en lyseblå bakgrunnsfarge (synlig i padding-området rundt bildet)", isCorrect: true, rationale: "Bakgrunnsfargen fyller ut både innholdsområdet og padding-området." },
+                    { text: "Farger selve bildefilen lyseblå", isCorrect: false, rationale: "Selve bildet fra eksterne kilder overstyres ikke av bakgrunnsfargen med mindre bildet er gjennomsiktig." },
+                    { text: "Endrer fargen på nettsidens bakgrunn", isCorrect: false, rationale: "Stilen her gjelder kun for `img`-elementene." },
+                    { text: "Farger rammen lyseblå", isCorrect: false, rationale: "Rammen er definert som brun (`brown`)." }
+                ],
+                hint: "Det setter fargen bak innholdet og polstringen."
+            },
+            {
+                question: "Hvor i en HTML-fil plassier man som regel `<style>`-elementet når man skriver intern CSS?",
+                options: [
+                    { text: "Inne i `<head>`-seksjonen", isCorrect: true, rationale: "Intern CSS plasseres standard i `<head>` slik at nettleseren laster inn stilene før siden vises." },
+                    { text: "Inne i `<body>`-seksjonen helt nederst", isCorrect: false, rationale: "Selv om det kan fungere, er det beste praksis å ha stiler i `<head>`." },
+                    { text: "Inne i `<html>`-taggen", isCorrect: false, rationale: "Stiler legges i egne tagger, ikke direkte i <html>-attributter." },
+                    { text: "Utenfor hele HTML-strukturen", isCorrect: false, rationale: "Alt må ligge innenfor rot-elementet `<html>`." }
+                ],
+                hint: "Hodet på dokumentet er der metadata og stiler samles."
+            },
+            {
+                question: "Hva betyr taggen `<img>` i HTML?",
+                options: [
+                    { text: "Den setter inn et bilde på nettsiden", isCorrect: true, rationale: "`<img>` (image) brukes til å bygge inn bilder." },
+                    { text: "Den lager en interaktive meny", isCorrect: false, rationale: "Menyer lages med andre tagger som `<nav>` og `<ul>`." },
+                    { text: "Den viser en tabell", isCorrect: false, rationale: "Tabeller lages med `<table>`." },
+                    { text: "Den lager en lenke", isCorrect: false, rationale: "Lenker lages med `<a>`." }
+                ],
+                hint: "Forkortelse for det engelske ordet for bilde."
+            },
+            {
+                question: "Hvilken attributt er helt nødvendig i en `<img>`-tagg for å vise selve bildet fra en kilde?",
+                options: [
+                    { text: "`src`", isCorrect: true, rationale: "`src` står for 'source' og peker på bildefilens adresse eller URL." },
+                    { text: "`href`", isCorrect: false, rationale: "`href` brukes i lenker (`<a>`), ikke i bilder." },
+                    { text: "`alt`", isCorrect: false, rationale: "`alt` er viktig for universell utforming, men kreves for at selve kildefilen skal hentes." },
+                    { text: "`class`", isCorrect: false, rationale: "`class` brukes til styling, ikke bildekilde." }
+                ],
+                hint: "Det står for 'source'."
+            },
+            {
+                question: "Hva er formålet med `alt`-attributten på et bilde?",
+                options: [
+                    { text: "Å gi en alternativ tekstbeskrivelse av bildet for skjermlesere og hvis bildet ikke lastes", isCorrect: true, rationale: "Det er avgjørende for universell utforming (UU)." },
+                    { text: "Å endre bildets størrelse automatisk", isCorrect: false, rationale: "Størrelse styres med CSS eller width/height-attributter." },
+                    { text: "Å bestemme bildets plassering på skjermen", isCorrect: false, rationale: "Plassering styres med CSS layout og marger." },
+                    { text: "Å legge til en ramme rundt bildet", isCorrect: false, rationale: "Rammer lages med CSS `border`." }
+                ],
+                hint: "Hva skjer hvis bildet ikke lastes, eller hvis en blind person besøker siden?"
+            },
+            {
+                question: "Hva skjer med de 6 bildene i kodesnutten din siden det står `img { ... }` i CSS?",
+                options: [
+                    { text: "Alle de 6 bildene får nøyaktig den samme stylingen med brun ramme, padding og marg", isCorrect: true, rationale: "En elementvelger (`img`) treffer alle elementer av den typen på hele siden." },
+                    { text: "Bare det første bildet blir stylet", isCorrect: false, rationale: "Elementvelgere gjelder for *alle* forekomster av elementet." },
+                    { text: "Ingen bilder blir stylet fordi man må bruke klasse", isCorrect: false, rationale: "Elementvelgere fungerer utmerket uten klasser." },
+                    { text: "Bare det siste bildet blir stylet", isCorrect: false, rationale: "CSS gjelder globalt for matchende elementer." }
+                ],
+                hint: "Tenk på om velgeren gjelder for ett eller alle eksemplarer av taggen."
+            },
+            {
+                question: "Hvilken HTML-tag brukes til å lage en overskrift av nivå 1 (`<h1>`), og hva kalles den lukkende taggen?",
+                options: [
+                    { text: "`</h1>`", isCorrect: true, rationale: "Lukkende tagger har alltid en skråstrek `/` foran taggnavnet." },
+                    { text: "<h1_end>", isCorrect: false, rationale: "HTML bruker ikke understrek og 'end' på denne måten." },
+                    { text: "`<1h>`", isCorrect: false, rationale: "Rekkefølgen på bokstav og tall er feil." },
+                    { text: "`#h1`", isCorrect: false, rationale: "Dette er ikke gyldig HTML-syntaks for lukkende tagger." }
+                ],
+                hint: "Den inneholder en skråstrek (/)."
+            },
+            {
+                question: "Dersom du ønsker å style *ett* helt spesielt bilde annerledes enn de andre ved hjelp av en `id`, hvordan ville du skrevet CSS-velgeren?",
+                options: [
+                    { text: "`#uniktBilde`", isCorrect: true, rationale: "ID-velgere bruker `#` foran det unike navnet." },
+                    { text: "`.uniktBilde`", isCorrect: false, rationale: "Punktum brukes for klasser, som kan være flere." },
+                    { text: "`img.uniktBilde`", isCorrect: false, rationale: "Dette kombinerer bilde og klasse, ikke en unik ID." },
+                    { text: "`id(uniktBilde)`", isCorrect: false, rationale: "Dette er ikke gyldig CSS-syntaks." }
+                ],
+                hint: "Hvilken symbol bruker man for ID i CSS?"
+            },
+            {
+                question: "Hvordan kan man skrive en klasse i HTML for å bruke den på flere elementer?",
+                options: [
+                    { text: `<img class="minKlasse" src="...">`, isCorrect: true, rationale: "Attributten `class` brukes til å tildele en klasse til et HTML-element." },
+                    { text: `<img id.class="minKlasse" src="...">`, isCorrect: false, rationale: "Syntaksen `id.class` finnes ikke." },
+                    { text: `<img style-class="minKlasse" src="...">`, isCorrect: false, rationale: "Attributten heter kun `class`." },
+                    { text: `<img name="minKlasse" src="...">`, isCorrect: false, rationale: "`name` brukes til andre formål, f.eks. skjemaer." }
+                ],
+                hint: "Selve HTML-attributten heter akkurat det samme som begrepet (class)."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        const questionText = document.getElementById("question-text");
+        const optionsContainer = document.getElementById("options-container");
+        const feedbackContainer = document.getElementById("feedback-container");
+        const feedbackTitle = document.getElementById("feedback-title");
+        const feedbackRationale = document.getElementById("feedback-rationale");
+        const nextBtn = document.getElementById("next-btn");
+        const progressText = document.getElementById("progress-text");
+        const progressBar = document.getElementById("progress-bar");
+        const questionContainer = document.getElementById("question-container");
+        const resultsScreen = document.getElementById("results-screen");
+
+        function loadQuestion() {
+            answered = false;
+            feedbackContainer.classList.add("hidden");
+            optionsContainer.innerHTML = "";
+            
+            const q = quizData[currentQuestion];
+            questionText.innerHTML = q.question;
+            progressText.innerText = `Spørsmål ${currentQuestion + 1} av ${quizData.length}`;
+            progressBar.style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
+
+            q.options.forEach((opt, index) => {
+                const button = document.createElement("button");
+                button.innerHTML = opt.text;
+                button.className = "w-full text-left p-4 rounded-xl bg-slate-700/60 hover:bg-slate-700 border border-slate-600 transition-all duration-200 font-medium text-slate-200 cursor-pointer";
+                button.onclick = () => selectOption(index, button);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function selectOption(selectedIndex, selectedButton) {
+            if (answered) return;
+            answered = true;
+
+            const q = quizData[currentQuestion];
+            const allButtons = optionsContainer.children;
+
+            q.options.forEach((opt, i) => {
+                allButtons[i].disabled = true;
+                if (opt.isCorrect) {
+                    allButtons[i].className = "w-full text-left p-4 rounded-xl bg-emerald-900/40 border border-emerald-500/50 text-emerald-200 font-medium cursor-default";
+                } else if (i === selectedIndex) {
+                    allButtons[i].className = "w-full text-left p-4 rounded-xl bg-rose-900/40 border border-rose-500/50 text-rose-200 font-medium cursor-default";
+                } else {
+                    allButtons[i].className = "w-full text-left p-4 rounded-xl bg-slate-800/40 border border-slate-700 text-slate-500 font-medium opacity-50 cursor-default";
+                }
+            });
+
+            if (q.options[selectedIndex].isCorrect) {
+                score++;
+                feedbackTitle.innerText = "Riktig!";
+                feedbackTitle.className = "font-bold text-base mb-1 text-emerald-400";
+            } else {
+                feedbackTitle.innerText = "Feil!";
+                feedbackTitle.className = "font-bold text-base mb-1 text-rose-400";
+            }
+
+            feedbackRationale.innerText = q.options[selectedIndex].rationale;
+            feedbackContainer.classList.remove("hidden");
+        }
+
+        nextBtn.onclick = () => {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        };
+
+        function showResults() {
+            questionContainer.classList.add("hidden");
+            feedbackContainer.classList.add("hidden");
+            resultsScreen.classList.remove("hidden");
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById("score-percentage").innerText = `${percentage}%`;
+            document.getElementById("score-text").innerText = `Du fikk ${score} av ${quizData.length} riktige spørsmål.`;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            resultsScreen.classList.add("hidden");
+            questionContainer.classList.remove("hidden");
+            loadQuestion();
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>

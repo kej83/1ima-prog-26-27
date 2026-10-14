@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+.container{
+    border:2px dashed black;
+    margin-bottom:20px;
+}
+.box{
+    width:80px; 
+    padding:20px;
+    background-color:lightblue;
+    border:1px solid black;
+}
+.flex{
+    display:flex;
+}
+.midten{
+    justify-content:center;
+}
+.spredt{
+    justify-content: space-between;
+}
+    </style>
+</head>
+<body>
+    <h1>Flexbox </h1>
+
+    <h2>1. Uten flexbox</h2>
+    <div class="container">
+    <div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+    </div>
+
+    <h2>2. display:flex</h2>
+    <div class="container flex">
+    <div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+    </div>
+
+    <h2>3. justify-content:center</h2>
+    <div class="container flex midten">
+    <div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+    </div>
+
+    <h2>4. justify-content:space-between</h2>
+    <div class="container flex spredt">
+    <div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+    </div>
+</body>
+</html>

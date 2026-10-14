@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+    border:2px dashed black;
+    margin-bottom:20px;
+    height:300px; 
+}
+.box{
+    width:80px;
+    padding:20px;
+    background-color:lightblue;
+    border:1px solid black;
+}
+.flex{
+    display: flex;
+}
+.midt{
+    align-items: center;;
+}
+.sentrert{
+    justify-content: center;
+    align-items: center;
+}
+.kolonne{
+    flex-direction: column;
+}
+    </style>
+    
+</head>
+<body>
+    <h2>1. Uten flexbox</h2>
+    <div class="container">
+    <div class="box">Morna, Jens!</div>
+    </div>
+
+    <h2>2. align-items</h2>
+    <div class="container flex midt">
+    <div class="box">Morna, Jens!</div>
+    </div>
+
+    <h2>3. perfekt sentrering</h2>
+    <div class="container flex sentrert">
+    <div class="box">Morna, Jens!</div>
+    <div class="box">Morna, Jens!</div>
+    <div class="box">Morna, Jens!</div>
+    </div>
+
+
+    <h2>4. flex-direction:column</h2>
+    <div class="container flex kolonne sentrert">
+    <div class="box">Morna, Jens!</div>
+    <div class="box">Morna, Jens!</div>
+    <div class="box">Morna, Jens!</div>
+    </div>
+</body>
+</html>
