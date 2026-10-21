@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hils på meg</h1>
+    <input type="text" id="inpNavn">
+    <button onclick="hils()">Gi meg hilsen</button>
+
+    <script>
+        function hils() {
+            let navn = inpNavn.value;
+            let hilsen = "Hei, " + navn;
+            document.write(hilsen);
+        }
+    </script>
+</body>
+</html>

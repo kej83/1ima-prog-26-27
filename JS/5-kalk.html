@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Kalkulator</h1>
+    <input id="inpTallA" type="number">
+    <input id="inpTallB" type="number"><br>
+    <button onclick="pluss()">+</button>
+    <button>-</button>
+    <button>*</button>
+    <button>/</button>
+
+    <p id="txtUt"></p>
+<!-- OPPGAVE: 
+ FIKS de andre knappene! -->
+    <script>
+        function pluss() {
+            let tallA = Number(inpTallA.value);
+            let tallB = Number(inpTallB.value);
+            let sum = tallA + tallB;
+            txtUt.textContent = `${tallA} + ${tallB} = ${sum}`;
+        }
+    </script>
+</body>
+</html>

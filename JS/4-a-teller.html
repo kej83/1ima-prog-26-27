@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Tell antall trykk</h1>
+    <button onclick="trykk()">Trykk på meg!</button>
+    <p id="txtUt"></p>
+
+    <script>
+        function trykk() {
+            // Øk med 1
+            antallTrykk++;
+            txtUt.textContent = `Du har trykket ${antallTrykk} ganger`;
+        }
+        // Startverdi 0
+        let antallTrykk = 0;
+    </script>
+</body>
+</html>

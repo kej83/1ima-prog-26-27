@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Nedtelling til rakett</h1>
+    <button onclick="startCountdown()">Start nedtelling</button>
+    <p id="txtUt"></p>
+
+    <script>
+        function startCountdown() {
+            setInterval(tellNed, 1000);
+        }
+
+        function tellNed() {
+            if (teller == 0) {
+                txtUt.textContent = "LAUNCH!";
+                clearInterval(tellNed, 1000);
+            } else {
+                txtUt.textContent = `${teller}...`;
+                teller--;
+            }
+        }
+
+        // Starter på 5
+        let teller = 5;
+    </script>
+</body>
+
+</html>
