@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Logg inn</h1>
+    <label for="inpBrukernavn">Brukernavn:</label><br>
+    <input id="inpBrukernavn" type="text"><br>
+
+    <label for="inpPassord">Passord:</label><br>
+    <input id="inpPassord" type="password"><br>
+
+    <button onclick="loggInn()" >Logg inn</button>
+
+    <p id="txtUt"></p>
+
+    <script>
+        function loggInn() {
+            // txtUt.textContent = "test";
+            // 1.Les inn brukernavn og passord
+            let bruker = inpBrukernavn.value;
+            let passord = inpPassord.value;
+
+            // 2. sjekk bruker/pass. && betyr OG
+            if (bruker == riktigBruker && passord == riktigPass) {
+                txtUt.textContent = "Du er logget inn!";
+            } else {
+                txtUt.textContent = "Feil brukernavn eller passord.";
+            }
+        }
+        // Fasit
+        let riktigBruker = "jens";
+        let riktigPass = "jens1234";
+    </script>
+
+</body>
+</html>

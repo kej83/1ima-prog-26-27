@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+//         Kinobillett med rabatt (||)
+// Eleven skriver inn alderen sin, og siden viser billettprisen. Du får barnepris hvis du er under 12 år eller 67 år og eldre. Alle andre betaler full pris. Her holder det at én av betingelsene er sann.
+let alder = Math.ceil(Math.random()*100);
+let barnepris = 80;
+let fullPris= 170;
+document.write(`<p>Din alder er ${alder}</p>`);
+// Du får barnepris hvis du er under 12 år eller 67 år og eldre.
+if (alder < 12 || alder >= 67) {
+    document.write(`<p>Du får barnepris til ${barnepris} kr.</p>`);
+} else {
+    document.write(`<p>Du får full pris til ${fullPris} kr.</p>`);
+}
+    </script>
+</body>
+</html>
