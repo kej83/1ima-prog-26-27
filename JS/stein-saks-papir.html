@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stein, saks, papir</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f4f8;
+    }
+    .knapper {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    #txtResultat {
+      font-size: 28px;
+      font-weight: bold;
+    }
+    button {
+      font-size: 20px;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 10px;
+      background-color: #1f3a5c;
+      color: white;
+    }
+    button:hover {
+      background-color: #3d6a9e;
+    }
+  </style>
+</head>
+<body>
+  <h1>Stein, saks, papir</h1>
+  <p>Velg ett av alternativene:</p>
+
+  <div class="knapper">
+    <button onclick="velgStein()">Stein</button>
+    <button onclick="velgSaks()">Saks</button>
+    <button onclick="velgPapir()">Papir</button>
+  </div>
+
+  <p id="txtSpiller"></p>
+  <p id="txtCpu"></p>
+  <p id="txtResultat"></p>
+
+  <script>
+    let spiller = "";
+
+    function velgStein() {
+      spiller = "stein";
+      spillRunde();
+    }
+
+    function velgSaks() {
+      spiller = "saks";
+      spillRunde();
+    }
+
+    function velgPapir() {
+      spiller = "papir";
+      spillRunde();
+    }
+
+    function spillRunde() {
+      txtSpiller.textContent = `Du valgte ${spiller}.`;
+
+      // CPU-en velger
+      let tall = Math.random();
+      let cpu = "";
+      if (tall < 0.33) {
+        cpu = "stein";
+      } else if (tall < 0.66) {
+        cpu = "saks";
+      } else {
+        cpu = "papir";
+      }
+      txtCpu.textContent = `CPU valgte ${cpu}.`;
+
+      // Hvem vant?
+      let resultat = "";
+      if (spiller == cpu) {
+        resultat = "Uavgjort!";
+      } else if (spiller == "stein" && cpu == "saks") {
+        resultat = "Du vant!";
+      } else if (spiller == "saks" && cpu == "papir") {
+        resultat = "Du vant!";
+      } else if (spiller == "papir" && cpu == "stein") {
+        resultat = "Du vant!";
+      } else {
+        resultat = "CPU vant!";
+      }
+      txtResultat.textContent = resultat;
+    }
+  </script>
+</body>
+</html>

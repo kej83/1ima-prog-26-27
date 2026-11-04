@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gjett tallet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f4f8;
+    }
+    input {
+      font-size: 20px;
+      padding: 10px;
+      width: 100px;
+      text-align: center;
+      border: 2px solid #1f3a5c;
+      border-radius: 10px;
+    }
+    button {
+      font-size: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #1f3a5c;
+      color: white;
+    }
+    button:hover {
+      background-color: #3d6a9e;
+    }
+    #txtHint {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gjett tallet</h1>
+  <p>Jeg tenker på et tall mellom 1 og 100. Klarer du å gjette det?</p>
+
+  <input type="number" id="inpGjett">
+  <button onclick="gjett()">Gjett</button>
+
+  <p id="txtHint"></p>
+  <p id="txtForsok"></p>
+  <button onclick="nyttSpill()">Nytt spill</button>
+
+  <script>
+    let hemmelig = Math.floor(Math.random() * 100) + 1;
+    let forsok = 0;
+
+    function gjett() {
+      let tall = Number(inpGjett.value);
+      forsok++;
+      txtForsok.textContent = `Antall forsøk: ${forsok}`;
+
+      if (tall == hemmelig) {
+        txtHint.textContent = `Riktig! Du brukte ${forsok} forsøk.`;
+      } else if (tall < hemmelig) {
+        txtHint.textContent = `${tall} er for lavt. Prøv høyere!`;
+      } else {
+        txtHint.textContent = `${tall} er for høyt. Prøv lavere!`;
+      }
+    }
+
+    function nyttSpill() {
+      hemmelig = Math.floor(Math.random() * 100) + 1;
+      forsok = 0;
+      txtHint.textContent = "";
+      txtForsok.textContent = "";
+      inpGjett.value = "";
+    }
+  </script>
+</body>
+</html>
